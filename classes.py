@@ -1,34 +1,22 @@
 class Zombie:
-    def __init__(self, name, age, size):
-        self.name = name
-        self.age = str(age)
-        self.size = size
+    def __init__(self, zombie_name, attack_power):
+        self.name = zombie_name
+        self.hp = 100.0
+        self.base_armor = 10.0
+        self.base_damage = attack_power
+        self.speed = 10.0
 
-    def zombie_intro(self):
-        print("aaaaaaaaaaaaaAAAAAAAAAAghhhh my name is " + self.name + ". I'm a zombie who can talk. I'm over " + self.age 
-            + " years old. I'm also a " + self.size +" zombie.")
+    def attack(self, enemy):
+        damage_dealt = self.base_damage - (self.base_damage * enemy.base_armor / 100)
+        enemy.take_damage(damage_dealt)
 
-z1 = Zombie("Bombur", 453 , "giant")
-z2 = Zombie("Athena Goddess of wisdom", 5246, "human-sized")
+    def take_damage(self, damage_dealt):
+        self.hp -= damage_dealt
+        print(self.name + " is attacked..." + "\nhealth:", self.hp)
+        if self.hp <= 0:
+            print("HP too low no longer able to fight.")
 
-class Person:
-    def __init__(self, name, personality, isSitting):
-        self.name = name
-        self.personality = personality
-        self.isSitting = isSitting
+bombur = Zombie("Bombur", 56)
+athena = Zombie("Athena Goddess of wisdom", 75)
 
-    def sit_down(self):
-        self.isSitting = True
- 
-    def stand_up(self):
-        self.isSitting = False
-
-    
-p1 = Person("Metis goddess of council", "aggressive", False)
-p2 = Person("Thorin Oakenshield", "greedy", True)
-
-p1.zombie_owned = z2
-p2.zombie_owned = z1
-
-p1.zombie_owned.zombie_intro()
-p2.zombie_owned.zombie_intro()
+athena.attack(bombur)
